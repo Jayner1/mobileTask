@@ -1,8 +1,5 @@
 package com.example.mobiletaskapp.data
 
-class Task {
-}package com.example.mobiletaskapp.data
-
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
