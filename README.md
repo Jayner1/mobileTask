@@ -10,6 +10,7 @@ Marking tasks as complete or incomplete with a checkbox.
 Deleting tasks with a trash icon. 
 
 To use the app, open it on an Android device or emulator, enter a task description, select a category and priority from dropdowns, and click "Add Task." Tasks appear in a list where you can check/uncheck, cycle priorities, or delete them.
+
 My purpose for creating this app is to practice building a full-stack mobile application, integrating a Room database, Jetpack Compose for modern UI, and Kotlin coroutines for asynchronous operations. This project helps me learn to create intuitive interfaces and robust data persistence.
 
 Software Demo Video: 
