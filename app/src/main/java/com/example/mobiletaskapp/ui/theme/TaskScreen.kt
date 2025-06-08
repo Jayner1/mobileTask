@@ -22,7 +22,7 @@ fun TaskScreen(
     categories: List<Category>,
     priorities: List<Priority>,
     onAddTask: (String, Int, Int) -> Unit,
-    onCompleteTask: (Int) -> Unit,
+    onCompleteTask: (Int, Boolean) -> Unit,
     onUpdatePriority: (Int, Int) -> Unit,
     onDeleteTask: (Int) -> Unit
 ) {
@@ -126,7 +126,7 @@ fun TaskScreen(
                 ) {
                     Checkbox(
                         checked = task.is_completed,
-                        onCheckedChange = { onCompleteTask(task.task_id) }
+                        onCheckedChange = { onCompleteTask(task.task_id, it) }
                     )
                     Column {
                         Text(text = task.description)
