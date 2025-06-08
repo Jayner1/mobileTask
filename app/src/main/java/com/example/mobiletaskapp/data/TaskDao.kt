@@ -23,6 +23,12 @@ interface TaskDao {
        """)
     suspend fun getAllTasks(): List<TaskWithDetails>
 
+    @Query("SELECT * FROM Priority")
+    suspend fun getAllPriorities(): List<Priority>
+
+    @Query("SELECT * FROM Categories")
+    suspend fun getAllCategories(): List<Category>
+
     @Query("UPDATE Tasks SET is_completed = 1 WHERE task_id = :taskId")
     suspend fun markComplete(taskId: Int)
 
