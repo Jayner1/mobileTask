@@ -13,7 +13,7 @@ To use the app, open it on an Android device or emulator, enter a task descripti
 
 My purpose for creating this app is to practice building a full-stack mobile application, integrating a Room database, Jetpack Compose for modern UI, and Kotlin coroutines for asynchronous operations. This project helps me learn to create intuitive interfaces and robust data persistence.
 
-Software Demo Video: 
+Software Demo Video: https://youtu.be/S0cxoK9Hp14
 
 Development Environment
 

@@ -15,7 +15,7 @@ import com.example.mobiletaskapp.data.TaskWithDetails
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 
-// TaskScreen.kt: Defines the UI for adding, viewing, and managing tasks.
+// TaskScreen.kt: UI for adding, viewing, and managing tasks.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskScreen(
