@@ -29,8 +29,8 @@ interface TaskDao {
     @Query("SELECT * FROM Categories")
     suspend fun getAllCategories(): List<Category>
 
-    @Query("UPDATE Tasks SET is_completed = 1 WHERE task_id = :taskId")
-    suspend fun markComplete(taskId: Int)
+    @Query("UPDATE Tasks SET is_completed = :isCompleted WHERE task_id = :taskId")
+    suspend fun toggleComplete(taskId: Int, isCompleted: Boolean)
 
     @Query("UPDATE Tasks SET priority_id = :priorityId WHERE task_id = :taskId")
     suspend fun updatePriority(taskId: Int, priorityId: Int)
