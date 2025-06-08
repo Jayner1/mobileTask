@@ -12,7 +12,10 @@ import androidx.compose.ui.unit.dp
 import com.example.mobiletaskapp.data.Category
 import com.example.mobiletaskapp.data.Priority
 import com.example.mobiletaskapp.data.TaskWithDetails
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskScreen(
     tasks: List<TaskWithDetails>,
@@ -140,7 +143,7 @@ fun TaskScreen(
                     )
                     IconButton(onClick = { onDeleteTask(task.task_id) }) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Default.Delete,
+                            imageVector = Icons.Default.Delete,
                             contentDescription = "Delete"
                         )
                     }
