@@ -12,7 +12,8 @@ import com.example.mobiletaskapp.data.Priority
 import com.example.mobiletaskapp.data.Task
 import com.example.mobiletaskapp.data.TaskWithDetails
 import com.example.mobiletaskapp.ui.TaskScreen
-import com.example.mobiletaskapp.ui.theme.CompleteAppTheme
+import com.example.mobiletaskapp.ui.theme.MobileTaskAppTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -29,36 +30,36 @@ class MainActivity : ComponentActivity() {
         ).build()
 
         setContent {
-            CompleteAppTheme {
-                var tasks by remember { mutableStateOf(listOf<TaskWithDetails>()) }
-                var categories by remember { mutableStateOf(listOf<Category>()) }
-                var priorities by remember { mutableStateOf(listOf<Priority>()) }
+            MobileTaskAppTheme {
+                val tasks = remember { mutableStateOf(listOf<TaskWithDetails>()) }
+                val categories = remember { mutableStateOf(listOf<Category>()) }
+                val priorities = remember { mutableStateOf(listOf<Priority>()) }
 
                 LaunchedEffect(Unit) {
                     withContext(Dispatchers.IO) {
                         initializeDatabase()
-                        tasks = appDatabase.taskDao().getAllTasks()
-                        categories = appDatabase.taskDao().getAllCategories()
-                        priorities = appDatabase.taskDao().getAllPriorities()
+                        tasks.value = appDatabase.taskDao().getAllTasks()
+                        categories.value = appDatabase.taskDao().getAllCategories()
+                        priorities.value = appDatabase.taskDao().getAllPriorities()
                     }
                 }
 
                 TaskScreen(
-                    tasks = tasks,
-                    categories = categories,
-                    priorities = priorities,
+                    tasks = tasks.value,
+                    categories = categories.value,
+                    priorities = priorities.value,
                     onAddTask = { desc, catId, priId ->
                         CoroutineScope(Dispatchers.IO).launch {
                             appDatabase.taskDao().insertTask(
                                 Task(description = desc, category_id = catId, priority_id = priId)
                             )
-                            tasks = appDatabase.taskDao().getAllTasks()
+                            tasks.value = appDatabase.taskDao().getAllTasks()
                         }
                     },
                     onCompleteTask = { taskId ->
                         CoroutineScope(Dispatchers.IO).launch {
                             appDatabase.taskDao().markComplete(taskId)
-                            tasks = appDatabase.taskDao().getAllTasks()
+                            tasks.value = appDatabase.taskDao().getAllTasks()
                         }
                     },
                     onUpdatePriority = { taskId, currentPriorityId ->
@@ -69,13 +70,13 @@ class MainActivity : ComponentActivity() {
                                 else -> 1 // Low -> High
                             }
                             appDatabase.taskDao().updatePriority(taskId, nextPriorityId)
-                            tasks = appDatabase.taskDao().getAllTasks()
+                            tasks.value = appDatabase.taskDao().getAllTasks()
                         }
                     },
                     onDeleteTask = { taskId ->
                         CoroutineScope(Dispatchers.IO).launch {
                             appDatabase.taskDao().deleteTask(taskId)
-                            tasks = appDatabase.taskDao().getAllTasks()
+                            tasks.value = appDatabase.taskDao().getAllTasks()
                         }
                     }
                 )
