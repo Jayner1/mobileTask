@@ -56,9 +56,9 @@ class MainActivity : ComponentActivity() {
                             tasks.value = appDatabase.taskDao().getAllTasks()
                         }
                     },
-                    onCompleteTask = { taskId ->
+                    onCompleteTask = { taskId, isCompleted ->
                         CoroutineScope(Dispatchers.IO).launch {
-                            appDatabase.taskDao().markComplete(taskId)
+                            appDatabase.taskDao().toggleComplete(taskId, isCompleted)
                             tasks.value = appDatabase.taskDao().getAllTasks()
                         }
                     },
@@ -92,8 +92,11 @@ class MainActivity : ComponentActivity() {
                 insertPriority(Priority(priority_name = "Low"))
                 insertCategory(Category(category_name = "Work"))
                 insertCategory(Category(category_name = "General"))
+                insertCategory(Category(category_name = "School"))
+                insertCategory(Category(category_name = "Health"))
+                insertCategory(Category(category_name = "Personal"))
                 insertTask(Task(description = "Team meeting", category_id = 1, priority_id = 1))
-                insertTask(Task(description = "Write essay", category_id = 2, priority_id = 2))
+                insertTask(Task(description = "Write essay", category_id = 3, priority_id = 2))
             }
         }
     }
