@@ -18,12 +18,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+// MainActivity.kt: Entry point of the app, sets up the database and UI, and handles task operations.
 class MainActivity : ComponentActivity() {
     private lateinit var appDatabase: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Initialize Room database for storing tasks, categories, and priorities.
         appDatabase = Room.databaseBuilder(
             applicationContext,
             AppDatabase::class.java, "task_database.db"
@@ -35,6 +37,7 @@ class MainActivity : ComponentActivity() {
                 val categories = remember { mutableStateOf(listOf<Category>()) }
                 val priorities = remember { mutableStateOf(listOf<Priority>()) }
 
+                // Load data from database when app starts.
                 LaunchedEffect(Unit) {
                     withContext(Dispatchers.IO) {
                         initializeDatabase()
@@ -64,10 +67,11 @@ class MainActivity : ComponentActivity() {
                     },
                     onUpdatePriority = { taskId, currentPriorityId ->
                         CoroutineScope(Dispatchers.IO).launch {
+                            // Cycle priority: High (1) -> Medium (2) -> Low (3) -> High (1).
                             val nextPriorityId = when (currentPriorityId) {
-                                1 -> 2 // High -> Medium
-                                2 -> 3 // Medium -> Low
-                                else -> 1 // Low -> High
+                                1 -> 2
+                                2 -> 3
+                                else -> 1
                             }
                             appDatabase.taskDao().updatePriority(taskId, nextPriorityId)
                             tasks.value = appDatabase.taskDao().getAllTasks()
@@ -90,6 +94,7 @@ class MainActivity : ComponentActivity() {
                 insertPriority(Priority(priority_name = "High"))
                 insertPriority(Priority(priority_name = "Medium"))
                 insertPriority(Priority(priority_name = "Low"))
+                // Initialize categories for task organization.
                 insertCategory(Category(category_name = "Work"))
                 insertCategory(Category(category_name = "General"))
                 insertCategory(Category(category_name = "School"))

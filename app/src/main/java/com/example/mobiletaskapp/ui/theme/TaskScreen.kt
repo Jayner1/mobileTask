@@ -15,6 +15,7 @@ import com.example.mobiletaskapp.data.TaskWithDetails
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 
+// TaskScreen.kt: Defines the UI for adding, viewing, and managing tasks.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TaskScreen(
@@ -45,6 +46,7 @@ fun TaskScreen(
         )
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Dropdown for selecting task category (e.g., Work, School).
         Box {
             OutlinedTextField(
                 value = categories.find { it.category_id == selectedCategoryId }?.category_name ?: "",
@@ -74,6 +76,7 @@ fun TaskScreen(
         }
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Dropdown for selecting task priority (e.g., High, Medium).
         Box {
             OutlinedTextField(
                 value = priorities.find { it.priority_id == selectedPriorityId }?.priority_name ?: "",

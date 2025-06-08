@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 
+// TaskDao.kt: Defines database operations for tasks, categories, and priorities.
 @Dao
 interface TaskDao {
     @Insert
@@ -15,6 +16,7 @@ interface TaskDao {
     @Insert
     suspend fun insertCategory(category: Category)
 
+    // Fetch all tasks with their category and priority names for display.
     @Query("""
            SELECT t.task_id, t.description, t.is_completed, c.category_name, p.priority_name
            FROM Tasks t
@@ -29,6 +31,7 @@ interface TaskDao {
     @Query("SELECT * FROM Categories")
     suspend fun getAllCategories(): List<Category>
 
+    // Toggle task completion status (true/false) to allow checking/unchecking.
     @Query("UPDATE Tasks SET is_completed = :isCompleted WHERE task_id = :taskId")
     suspend fun toggleComplete(taskId: Int, isCompleted: Boolean)
 
